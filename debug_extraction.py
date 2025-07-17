@@ -3,7 +3,7 @@ import json
 import os
 from pdf_parser import extract_all_elements
 from grid_builder import build_logical_grid
-from value_retriever import retrieve_values_from_grid
+from agents.value_retriever import retrieve_values_from_grid
 
 
 def debug_extraction(pdf_path):
