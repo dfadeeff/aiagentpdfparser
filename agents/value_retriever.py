@@ -63,20 +63,25 @@ class ValueRetriever:
     # ------------------------------------------------------------------ #
 
     def _extract_number(self, txt: str) -> float | None:
-        """
-        Returns a float if numeric text is found, else None.
-        Handles European decimal comma.
-        """
         match = self._rx_number.search(txt)
-        if match:
-            cleaned = match.group(0)
-            # Remove thousands separators in either style
-            cleaned = cleaned.replace(" ", "").replace(".", "").replace(",", ".")
-            try:
-                return float(cleaned)
-            except ValueError:
-                return None
-        return None
+        if not match:
+            return None
+        cleaned = match.group(0)
+
+        # ─── NEW: ignore stray minus at the start ─────────────────────
+        if cleaned.lstrip().startswith("-"):
+            cleaned = cleaned.lstrip().lstrip("-")
+        # ──────────────────────────────────────────────────────────────
+
+        cleaned = (
+            cleaned.replace(" ", "")
+                   .replace(".", "")
+                   .replace(",", ".")
+        )
+        try:
+            return float(cleaned)
+        except ValueError:
+            return None
 
     def _preprocess_patch(patch: np.ndarray) -> np.ndarray:
         gray = cv2.cvtColor(patch, cv2.COLOR_BGR2GRAY)
@@ -93,5 +98,27 @@ class ValueRetriever:
         cleaned = cleaned.replace(" ", "").replace(".", "").replace(",", ".")
         try:
             return float(cleaned)
+        except ValueError:
+            return None
+
+    def normalise(text: str, expect_non_negative=True):
+        """Return a float or None from a raw cell string."""
+        if not text or text.strip() in {"-", "-"}:  # empty placeholder
+            return None
+
+        # Remove errant thousands separators (space or dot)
+        clean = text.replace("\u202f", "").replace(" ", "").replace(".", "")
+
+        # If the first *non-space* char is a hyphen but we know
+        # the column should be non-negative, drop the hyphen.
+        if expect_non_negative and clean.lstrip().startswith("-"):
+            clean = clean.lstrip().lstrip("-")
+
+        # Convert European decimals  25,40  →  25.40
+        clean = clean.replace(",", ".")
+
+        # Finally, guard the float conversion
+        try:
+            return float(clean)
         except ValueError:
             return None

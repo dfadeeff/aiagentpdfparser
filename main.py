@@ -35,7 +35,14 @@ def extract(pdf_path: str | Path) -> List[Dict[str, Any]]:
             cells = grid_builder.extract_cells(table)
             page_cells = ocr.ocr_cells(cells, page_img)
             all_cells.extend(page_cells)
-    return all_cells
+    seen = set()
+    clean = []
+    for cell in all_cells:
+        key = (cell["page"], cell["row"], cell["col"])  # unique grid slot
+        if key not in seen:
+            seen.add(key)
+            clean.append(cell)
+    return clean
 
 
 def cli() -> None:
