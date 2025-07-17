@@ -1,5 +1,6 @@
 # value_retriever.py
 import json
+import re
 from typing import List, Dict, Any, Set
 
 
@@ -42,12 +43,13 @@ def retrieve_values_from_grid(grid: List[List[str]]) -> str:
     # Helper functions
     def is_numeric(s: str) -> bool:
         """Check if string contains a numeric value"""
+
+        filtered = re.sub(r"[^0-9,.\-]", "", s)
+        normalized = filtered.replace(".", "").replace(",", ".").replace("-", "").strip()
         if not s or not isinstance(s, str):
             return False
-        # Handle European number format (comma as decimal separator)
-        cleaned = s.replace(".", "").replace(",", ".").replace("-", "").strip()
         try:
-            float(cleaned)
+            float(normalized)
             return True
         except ValueError:
             return False

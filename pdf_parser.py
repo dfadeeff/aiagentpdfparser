@@ -61,7 +61,7 @@ def extract_all_elements(pdf_path: str) -> Tuple[List[Dict[str, Any]], List[Tupl
         contours, _ = cv2.findContours(detected_horiz, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in contours:
             x, y, w, h = cv2.boundingRect(c)
-            if w > 50:  # Filter out small lines
+            if w > 30:  # Filter out small lines
                 horiz_lines.append((x, y, x + w, y))
 
         # Detect vertical lines
