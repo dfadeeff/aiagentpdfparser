@@ -1,7 +1,7 @@
 pyautogen
 pypdf
-openai
-python-dotenv
+openai~=1.97.0
+python-dotenv~=1.1.1
 langchain
 langgraph
 pypdf
@@ -10,5 +10,10 @@ python-dotenv
 pdfplumber
 pandas
 pdf2image
-fitz
-pytesseract
+fitz~=0.0.1.dev2
+pytesseract~=0.3.13
+
+pathlib~=1.0.1
+pillow~=11.3.0
+opencv-python~=4.12.0.88
+numpy~=2.2.6

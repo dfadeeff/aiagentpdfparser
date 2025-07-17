@@ -1,71 +1,97 @@
-# agents/value_retriever.py
-import json
-from typing import List
+# -----
+# value_retriever.py
+# -----
+"""
+value_retriever.py
+==================
+OCR each detected cell, clean the text, and emit a JSON‑serialisable
+dict enriched with row/column IDs.
+"""
+from __future__ import annotations
+
+import re
+from typing import List, Dict, Any
+import cv2
+import numpy as np
+import pytesseract
+from PIL import Image
+
+from grid_builder import Cell
+
+NUM_RE = re.compile(r"-?\d[\d\. ,]*\d")
 
 
-def retrieve_values_from_grid(grid: List[List[str]]) -> str:
-    """
-    Parses the logical grid to extract structured data. This version uses a
-    "grid propagation" method to correctly handle complex merged cells.
-    """
-    print("--- VALUE RETRIEVER (SMART): Analyzing grid with propagation logic. ---")
-    if not grid:
-        return "[]"
+class ValueRetriever:
+    def __init__(self, lang: str = "eng") -> None:
+        # Use a Tesseract whitelist to speed up numeric OCR.
+        self.tess_config = (
+            "--oem 3 --psm 7 -c tessedit_char_whitelist=0123456789.,-"
+        )
+        self.lang = lang
+        self._rx_number = re.compile(r"[0-9][0-9 .,:-]*")
 
-    rows = len(grid)
-    cols = len(grid[0])
+    # ------------------------------------------------------------------ #
+    #  Public API
+    # ------------------------------------------------------------------ #
 
-    # --- Step 1: Grid Propagation ---
-    # Create a copy of the grid to fill in the blanks from merged cells.
-    # This makes header lookups trivial and reliable.
-    propagated_grid = [row[:] for row in grid]
+    def ocr_cells(
+            self, cells: List[Cell], full_page: Image.Image
+    ) -> List[Dict[str, Any]]:
+        out: list[dict] = []
+        for cell in cells:
+            crop = full_page.crop(cell.bbox)
+            text = pytesseract.image_to_string(
+                crop, lang=self.lang, config=self.tess_config
+            ).strip()
 
-    # Propagate downwards
-    for c in range(cols):
-        for r in range(1, rows):
-            if not propagated_grid[r][c] and propagated_grid[r - 1][c]:
-                propagated_grid[r][c] = propagated_grid[r - 1][c]
+            number = self._extract_number(text)
 
-    # Propagate sideways
-    for r in range(rows):
-        for c in range(1, cols):
-            if not propagated_grid[r][c] and propagated_grid[r][c - 1]:
-                propagated_grid[r][c] = propagated_grid[r][c - 1]
+            out.append(
+                {
+                    "page": cell.page,
+                    "bbox": cell.bbox,
+                    "row": cell.row,
+                    "col": cell.col,
+                    "raw_text": text,
+                    "value": number,
+                }
+            )
+        return out
 
-    # --- Step 2: Extract Values and Context ---
-    final_output = []
+    # ------------------------------------------------------------------ #
+    #  Helpers
+    # ------------------------------------------------------------------ #
 
-    def is_numeric(s):
-        # A robust check for strings like "23,00" or "1.589,10"
-        return s and any(char.isdigit() for char in s) and "," in s
+    def _extract_number(self, txt: str) -> float | None:
+        """
+        Returns a float if numeric text is found, else None.
+        Handles European decimal comma.
+        """
+        match = self._rx_number.search(txt)
+        if match:
+            cleaned = match.group(0)
+            # Remove thousands separators in either style
+            cleaned = cleaned.replace(" ", "").replace(".", "").replace(",", ".")
+            try:
+                return float(cleaned)
+            except ValueError:
+                return None
+        return None
 
-    def is_clean_header(s, current_value):
-        # A header should not be empty, not be the value itself, and not be another number.
-        return s and s != current_value and not is_numeric(s)
+    def _preprocess_patch(patch: np.ndarray) -> np.ndarray:
+        gray = cv2.cvtColor(patch, cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
+        _, bin_ = cv2.threshold(gray, 0, 255,
+                                cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        return 255 - bin_  # white text on black BG → helps Tesseract
 
-    # Find all numeric cells in the ORIGINAL grid
-    for r, row in enumerate(grid):
-        for c, cell_content in enumerate(row):
-            if is_numeric(cell_content):
-                row_context = set()
-                # Find Row Context using the propagated grid
-                for i in range(c - 1, -1, -1):
-                    header = propagated_grid[r][i]
-                    if is_clean_header(header, cell_content):
-                        row_context.add(header)
-
-                col_context = set()
-                # Find Column Context using the propagated grid
-                for i in range(r - 1, -1, -1):
-                    header = propagated_grid[i][c]
-                    if is_clean_header(header, cell_content):
-                        col_context.add(header)
-
-                final_output.append({
-                    "value": cell_content,
-                    "row_context": sorted(list(row_context)),
-                    "column_context": sorted(list(col_context))
-                })
-
-    print("--- VALUE RETRIEVER (SMART): Extraction complete. ---")
-    return json.dumps(final_output, indent=2)
+    def _to_number(txt: str) -> float | None:
+        m = NUM_RE.search(txt)
+        if not m:
+            return None
+        cleaned = m.group(0)
+        cleaned = cleaned.replace(" ", "").replace(".", "").replace(",", ".")
+        try:
+            return float(cleaned)
+        except ValueError:
+            return None

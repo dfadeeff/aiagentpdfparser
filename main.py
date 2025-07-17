@@ -1,54 +1,56 @@
-# main.py
+"""
+main.py
+=======
+Command‑line entry point: run
+
+    python main.py Table-Example-R.pdf -o extracted.json
+
+and you will get a JSON array containing one record per cell with
+(page, bbox, row, col, raw_text, value).
+"""
+
+from __future__ import annotations
+
 import argparse
-import os
 import json
-from agents.pdf_parser import extract_raw_text_blocks
-from agents.grid_builder import build_logical_grid
-from agents.value_retriever import retrieve_values_from_grid
+from pathlib import Path
+from typing import List, Dict, Any
 
-def main():
-    """
-    Main function to orchestrate the deterministic table extraction pipeline.
-    """
-    parser = argparse.ArgumentParser(
-        description="A deterministic pipeline to extract data from a complex PDF table."
+from pdf_parser import PDFParser
+from grid_builder import GridBuilder
+from agents.value_retriever import ValueRetriever
+
+
+def extract(pdf_path: str | Path) -> List[Dict[str, Any]]:
+    parser = PDFParser(pdf_path)
+    pages = parser.to_images()
+
+    grid_builder = GridBuilder()
+    ocr = ValueRetriever()
+
+    all_cells: list[dict] = []
+    for page_index, page_img in enumerate(pages, start=1):
+        tables = grid_builder.extract_tables(page_img, page_index)
+        for table in tables:
+            cells = grid_builder.extract_cells(table)
+            page_cells = ocr.ocr_cells(cells, page_img)
+            all_cells.extend(page_cells)
+    return all_cells
+
+
+def cli() -> None:
+    ap = argparse.ArgumentParser(description="Extract numeric cells from a PDF table")
+    ap.add_argument("pdf", help="Path to PDF")
+    ap.add_argument(
+        "-o", "--out", default="extracted.json", help="Where to write the JSON output"
     )
-    parser.add_argument("pdf_path", help="Path to the PDF file.")
-    args = parser.parse_args()
+    args = ap.parse_args()
 
-    if not os.path.exists(args.pdf_path):
-        print(f"FATAL: File not found at '{args.pdf_path}'")
-        return
-
-    # --- THE ASSEMBLY LINE ---
-    # Station 1: Get raw materials with coordinates
-    raw_blocks = extract_raw_text_blocks(args.pdf_path)
-    if not raw_blocks:
-        print("FAILURE: Could not extract any text from the PDF.")
-        return
-
-    # Station 2: Build the logical grid architecture
-    logical_grid = build_logical_grid(raw_blocks)
-    if not logical_grid:
-        print("FAILURE: Could not build a logical grid from the PDF content.")
-        return
-
-    # Station 3: Assemble the final values from the grid
-    final_json_output = retrieve_values_from_grid(logical_grid)
-
-    # --- SAVE THE FINAL PRODUCT ---
-    output_dir = "output"
-    os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, "extracted_data_deterministic.json")
-
-    with open(output_path, "w") as f:
-        f.write(final_json_output)
-
-    print("\n" + "="*50)
-    print("--- SUCCESS ---")
-    print(f"All values extracted and saved to: {output_path}")
-    print("="*50)
+    records = extract(args.pdf)
+    with open(args.out, "w", encoding="utf-8") as fp:
+        json.dump(records, fp, ensure_ascii=False, indent=2)
+    print(f"Wrote {args.out} with {len(records)} cell records")
 
 
 if __name__ == "__main__":
-    main()
+    cli()
