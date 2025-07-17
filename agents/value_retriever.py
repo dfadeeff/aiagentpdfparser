@@ -1,124 +1,121 @@
-# -----
 # value_retriever.py
-# -----
-"""
-value_retriever.py
-==================
-OCR each detected cell, clean the text, and emit a JSON‑serialisable
-dict enriched with row/column IDs.
-"""
-from __future__ import annotations
-
-import re
-from typing import List, Dict, Any
-import cv2
-import numpy as np
-import pytesseract
-from PIL import Image
-
-from grid_builder import Cell
-
-NUM_RE = re.compile(r"-?\d[\d\. ,]*\d")
+import json
+from typing import List, Dict, Any, Set
 
 
-class ValueRetriever:
-    def __init__(self, lang: str = "eng") -> None:
-        # Use a Tesseract whitelist to speed up numeric OCR.
-        self.tess_config = (
-            "--oem 3 --psm 7 -c tessedit_char_whitelist=0123456789.,-"
-        )
-        self.lang = lang
-        self._rx_number = re.compile(r"[0-9][0-9 .,:-]*")
+def retrieve_values_from_grid(grid: List[List[str]]) -> str:
+    """
+    Parses the logical grid to extract structured data with proper context.
+    """
+    print("--- VALUE RETRIEVER: Analyzing grid with hierarchical context ---")
+    if not grid or len(grid) == 0:
+        return "[]"
 
-    # ------------------------------------------------------------------ #
-    #  Public API
-    # ------------------------------------------------------------------ #
+    rows = len(grid)
+    cols = len(grid[0]) if rows > 0 else 0
 
-    def ocr_cells(
-            self, cells: List[Cell], full_page: Image.Image
-    ) -> List[Dict[str, Any]]:
-        out: list[dict] = []
-        for cell in cells:
-            crop = full_page.crop(cell.bbox)
-            text = pytesseract.image_to_string(
-                crop, lang=self.lang, config=self.tess_config
-            ).strip()
+    if rows == 0 or cols == 0:
+        return "[]"
 
-            number = self._extract_number(text)
+    # Create propagated grid for merged cells
+    propagated_grid = [row[:] for row in grid]
 
-            out.append(
-                {
-                    "page": cell.page,
-                    "bbox": cell.bbox,
-                    "row": cell.row,
-                    "col": cell.col,
-                    "raw_text": text,
-                    "value": number,
+    # Propagate values downward for merged cells
+    for r in range(1, rows):
+        for c in range(cols):
+            if not propagated_grid[r][c].strip() and propagated_grid[r - 1][c].strip():
+                # Check if this is likely a merged cell (not just empty)
+                if r < rows - 1 and not grid[r + 1][c].strip():
+                    propagated_grid[r][c] = propagated_grid[r - 1][c]
+
+    # Propagate values rightward for merged cells
+    for r in range(rows):
+        for c in range(1, cols):
+            if not propagated_grid[r][c].strip() and propagated_grid[r][c - 1].strip():
+                # Check if this is likely a merged cell
+                if c < cols - 1 and not grid[r][c + 1].strip():
+                    propagated_grid[r][c] = propagated_grid[r][c - 1]
+
+    # Extract all values with their context
+    results = []
+
+    # Helper functions
+    def is_numeric(s: str) -> bool:
+        """Check if string contains a numeric value"""
+        if not s or not isinstance(s, str):
+            return False
+        # Handle European number format (comma as decimal separator)
+        cleaned = s.replace(".", "").replace(",", ".").replace("-", "").strip()
+        try:
+            float(cleaned)
+            return True
+        except ValueError:
+            return False
+
+    def clean_value(s: str) -> str:
+        """Clean and standardize numeric values"""
+        if not s:
+            return ""
+        # Remove minus sign prefix and handle European format
+        s = s.strip()
+        if s.startswith("-"):
+            s = s[1:]
+        return s
+
+    def get_row_headers(r: int, c: int) -> List[str]:
+        """Get all row headers for a cell"""
+        headers = []
+        # Scan left from the cell
+        for i in range(c - 1, -1, -1):
+            content = propagated_grid[r][i].strip()
+            if content and not is_numeric(content):
+                headers.append(content)
+        return headers[::-1]  # Reverse to get left-to-right order
+
+    def get_column_headers(r: int, c: int) -> List[str]:
+        """Get all column headers for a cell"""
+        headers = []
+        # Scan up from the cell
+        for i in range(r - 1, -1, -1):
+            content = propagated_grid[i][c].strip()
+            if content and not is_numeric(content):
+                headers.append(content)
+        return headers[::-1]  # Reverse to get top-to-bottom order
+
+    # Find all numeric values in the original grid
+    for r in range(rows):
+        for c in range(cols):
+            cell_content = grid[r][c].strip()
+            if cell_content and is_numeric(cell_content):
+                # Get context from propagated grid
+                row_headers = get_row_headers(r, c)
+                col_headers = get_column_headers(r, c)
+
+                # Add table title if in top-left area
+                table_title = None
+                if r > 0 and c > 0:
+                    # Check top-left corner for table title
+                    for i in range(min(3, rows)):
+                        for j in range(min(3, cols)):
+                            content = propagated_grid[i][j].strip()
+                            if content and "Table" in content:
+                                table_title = content
+                                break
+                        if table_title:
+                            break
+
+                result = {
+                    "value": clean_value(cell_content),
+                    "row": r,
+                    "col": c,
+                    "row_headers": row_headers,
+                    "column_headers": col_headers
                 }
-            )
-        return out
 
-    # ------------------------------------------------------------------ #
-    #  Helpers
-    # ------------------------------------------------------------------ #
+                if table_title and table_title not in col_headers:
+                    result["table_title"] = table_title
 
-    def _extract_number(self, txt: str) -> float | None:
-        match = self._rx_number.search(txt)
-        if not match:
-            return None
-        cleaned = match.group(0)
+                results.append(result)
 
-        # ─── NEW: ignore stray minus at the start ─────────────────────
-        if cleaned.lstrip().startswith("-"):
-            cleaned = cleaned.lstrip().lstrip("-")
-        # ──────────────────────────────────────────────────────────────
-
-        cleaned = (
-            cleaned.replace(" ", "")
-                   .replace(".", "")
-                   .replace(",", ".")
-        )
-        try:
-            return float(cleaned)
-        except ValueError:
-            return None
-
-    def _preprocess_patch(patch: np.ndarray) -> np.ndarray:
-        gray = cv2.cvtColor(patch, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (3, 3), 0)
-        _, bin_ = cv2.threshold(gray, 0, 255,
-                                cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        return 255 - bin_  # white text on black BG → helps Tesseract
-
-    def _to_number(txt: str) -> float | None:
-        m = NUM_RE.search(txt)
-        if not m:
-            return None
-        cleaned = m.group(0)
-        cleaned = cleaned.replace(" ", "").replace(".", "").replace(",", ".")
-        try:
-            return float(cleaned)
-        except ValueError:
-            return None
-
-    def normalise(text: str, expect_non_negative=True):
-        """Return a float or None from a raw cell string."""
-        if not text or text.strip() in {"-", "-"}:  # empty placeholder
-            return None
-
-        # Remove errant thousands separators (space or dot)
-        clean = text.replace("\u202f", "").replace(" ", "").replace(".", "")
-
-        # If the first *non-space* char is a hyphen but we know
-        # the column should be non-negative, drop the hyphen.
-        if expect_non_negative and clean.lstrip().startswith("-"):
-            clean = clean.lstrip().lstrip("-")
-
-        # Convert European decimals  25,40  →  25.40
-        clean = clean.replace(",", ".")
-
-        # Finally, guard the float conversion
-        try:
-            return float(clean)
-        except ValueError:
-            return None
+    print(f"--- VALUE RETRIEVER: Extracted {len(results)} values with context ---")
+    return json.dumps(results, indent=2, ensure_ascii=False)
