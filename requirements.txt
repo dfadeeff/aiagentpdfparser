@@ -1,0 +1,14 @@
+pyautogen
+pypdf
+openai
+python-dotenv
+langchain
+langgraph
+pypdf
+openai
+python-dotenv
+pdfplumber
+pandas
+pdf2image
+fitz
+pytesseract
