@@ -1,165 +1,30 @@
 [
   {
-    "value": "[7 Col2A",
-    "row": 1,
-    "col": 14,
-    "row_headers": [
-      "cor"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "Col2B",
-    "row": 1,
-    "col": 17,
-    "row_headers": [
-      "cor"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "| coma Col2A",
-    "row": 1,
-    "col": 19,
-    "row_headers": [
-      "cor"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "[cams Col2B",
-    "row": 1,
-    "col": 21,
-    "row_headers": [
-      "cor"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "Col5",
-    "row": 1,
-    "col": 30,
-    "row_headers": [
-      "cor"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "Col3A",
-    "row": 2,
-    "col": 16,
-    "row_headers": [
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "Col3B",
-    "row": 2,
-    "col": 20,
-    "row_headers": [
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps",
-      "Ps"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "M1",
-    "row": 3,
-    "col": 0,
-    "row_headers": [],
-    "column_headers": []
-  },
-  {
-    "value": "Row.Invisible.Grid1",
-    "row": 3,
-    "col": 6,
-    "row_headers": [
-      "Ps"
-    ],
-    "column_headers": [
-      "Ps"
-    ]
-  },
-  {
-    "value": "2300",
-    "row": 3,
-    "col": 12,
-    "row_headers": [
-      "Ps"
-    ],
-    "column_headers": [
-      "cor",
-      "Ps"
-    ]
-  },
-  {
-    "value": "| 25,40",
-    "row": 3,
-    "col": 19,
-    "row_headers": [
-      "Ps",
-      "|",
-      "|"
-    ],
-    "column_headers": []
-  },
-  {
     "value": "115,50",
     "row": 3,
     "col": 21,
     "row_headers": [
+      "M1",
+      "M1",
+      "M1",
+      "M1",
+      "M1",
       "Ps",
+      "Row.Invisible.Grid1",
+      "Row.Invisible.Grid1",
+      "Row.Invisible.Grid1",
+      "Row.Invisible.Grid1",
+      "Row.Invisible.Grid1",
+      "2300",
       "|",
-      "|"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "Merged1",
-    "row": 4,
-    "col": 2,
-    "row_headers": [],
-    "column_headers": []
-  },
-  {
-    "value": "Row.Invisible.Grid2",
-    "row": 4,
-    "col": 6,
-    "row_headers": [
-      "Ps"
+      "|",
+      "Col2B",
+      "| 25,40",
+      "Col3B"
     ],
     "column_headers": [
-      "Ps"
-    ]
-  },
-  {
-    "value": "2400",
-    "row": 4,
-    "col": 12,
-    "row_headers": [
-      "Ps"
-    ],
-    "column_headers": [
-      "cor",
-      "Ps"
+      "[cams Col2B",
+      "Col3B"
     ]
   },
   {
@@ -167,92 +32,49 @@
     "row": 4,
     "col": 21,
     "row_headers": [
+      "M1",
+      "Merged1",
+      "Merged1",
+      "Merged1",
       "Ps",
+      "Row.Invisible.Grid2",
+      "Row.Invisible.Grid2",
+      "Row.Invisible.Grid2",
+      "Row.Invisible.Grid2",
+      "Row.Invisible.Grid2",
+      "2400",
       "|",
       "=|",
-      "|"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "2600 26,00",
-    "row": 5,
-    "col": 12,
-    "row_headers": [
-      "Ps",
-      "Rowinvisile.cias",
-      "[co",
-      "ce",
-      "|"
+      "|",
+      "Col2B",
+      "Col2B",
+      "Col2B"
     ],
     "column_headers": [
-      "cor",
-      "Ps"
+      "[cams Col2B",
+      "Col3B"
     ]
-  },
-  {
-    "value": "2520 25,20",
-    "row": 5,
-    "col": 19,
-    "row_headers": [
-      "Ps",
-      "Rowinvisile.cias",
-      "[co",
-      "ce",
-      "|",
-      "|",
-      "|",
-      "|",
-      "|"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "105.50 105,50",
-    "row": 5,
-    "col": 21,
-    "row_headers": [
-      "Ps",
-      "Rowinvisile.cias",
-      "[co",
-      "ce",
-      "|",
-      "|",
-      "|",
-      "|",
-      "|",
-      "|"
-    ],
-    "column_headers": []
-  },
-  {
-    "value": "M2",
-    "row": 10,
-    "col": 0,
-    "row_headers": [],
-    "column_headers": []
-  },
-  {
-    "value": "Merged2",
-    "row": 11,
-    "col": 2,
-    "row_headers": [],
-    "column_headers": []
   },
   {
     "value": "135,40",
     "row": 11,
     "col": 14,
     "row_headers": [
+      "M2",
+      "Merged2",
+      "Merged2",
+      "Merged2",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
       "[co",
       "ce",
       "ce",
-      "|"
+      "|",
+      "2600 26,00"
     ],
     "column_headers": [
+      "[7 Col2A",
       "Ps",
       "|",
       "|",
@@ -260,7 +82,8 @@
       "|",
       "|",
       "|",
-      "|"
+      "|",
+      "2600 26,00"
     ]
   },
   {
@@ -268,6 +91,10 @@
     "row": 11,
     "col": 17,
     "row_headers": [
+      "M2",
+      "Merged2",
+      "Merged2",
+      "Merged2",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -275,10 +102,20 @@
       "ce",
       "ce",
       "|",
+      "2600 26,00",
       "|",
       "|"
     ],
     "column_headers": [
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
       "|"
     ]
   },
@@ -287,6 +124,10 @@
     "row": 11,
     "col": 19,
     "row_headers": [
+      "M2",
+      "Merged2",
+      "Merged2",
+      "Merged2",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -294,11 +135,20 @@
       "ce",
       "ce",
       "|",
+      "2600 26,00",
       "|",
       "|",
       "|"
     ],
     "column_headers": [
+      "| coma Col2A",
+      "| 25,40",
+      "Col2B",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
       "|"
     ]
   },
@@ -307,6 +157,11 @@
     "row": 12,
     "col": 24,
     "row_headers": [
+      "M2",
+      "M2",
+      "Merged2",
+      "Merged2",
+      "Merged2",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -314,18 +169,37 @@
       "ce",
       "ce",
       "|",
+      "2600 26,00",
+      "2600 26,00",
       "|",
       "|",
       "|",
-      "|"
+      "|",
+      "105.50 105,50",
+      "105.50 105,50"
     ],
-    "column_headers": []
+    "column_headers": [
+      "[cams Col2B",
+      "Col3B",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50"
+    ]
   },
   {
     "value": "59,00",
     "row": 12,
     "col": 27,
     "row_headers": [
+      "M2",
+      "M2",
+      "Merged2",
+      "Merged2",
+      "Merged2",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -333,12 +207,17 @@
       "ce",
       "ce",
       "|",
+      "2600 26,00",
+      "2600 26,00",
       "|",
       "|",
       "|",
-      "|"
+      "|",
+      "105.50 105,50",
+      "105.50 105,50"
     ],
     "column_headers": [
+      "[cams Col2B",
       "use",
       "use",
       "use",
@@ -347,28 +226,19 @@
       "use",
       "use",
       "use",
-      "use"
+      "use",
+      "105.50 105,50"
     ]
-  },
-  {
-    "value": "M4",
-    "row": 19,
-    "col": 0,
-    "row_headers": [],
-    "column_headers": []
-  },
-  {
-    "value": "Merged4",
-    "row": 20,
-    "col": 2,
-    "row_headers": [],
-    "column_headers": []
   },
   {
     "value": "15,00",
     "row": 20,
     "col": 12,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -380,6 +250,22 @@
     "column_headers": [
       "cor",
       "Ps",
+      "2300",
+      "2400",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
+      "2600 26,00",
       "|"
     ]
   },
@@ -388,6 +274,10 @@
     "row": 20,
     "col": 14,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -397,6 +287,7 @@
       "|"
     ],
     "column_headers": [
+      "[7 Col2A",
       "Ps",
       "|",
       "|",
@@ -405,6 +296,7 @@
       "|",
       "|",
       "|",
+      "2600 26,00",
       "|"
     ]
   },
@@ -413,6 +305,10 @@
     "row": 20,
     "col": 17,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -424,6 +320,15 @@
       "|"
     ],
     "column_headers": [
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
       "|",
       "|"
     ]
@@ -433,6 +338,10 @@
     "row": 20,
     "col": 19,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -445,6 +354,14 @@
       "|"
     ],
     "column_headers": [
+      "| coma Col2A",
+      "| 25,40",
+      "Col2B",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
       "|",
       "|"
     ]
@@ -454,6 +371,10 @@
     "row": 20,
     "col": 21,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -467,6 +388,22 @@
       "|"
     ],
     "column_headers": [
+      "[cams Col2B",
+      "Col3B",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
       "|"
     ]
   },
@@ -475,6 +412,10 @@
     "row": 20,
     "col": 24,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -488,6 +429,15 @@
       "|"
     ],
     "column_headers": [
+      "[cams Col2B",
+      "Col3B",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
       "|"
     ]
   },
@@ -496,6 +446,10 @@
     "row": 20,
     "col": 27,
     "row_headers": [
+      "M4",
+      "Merged4",
+      "Merged4",
+      "Merged4",
       "Ps",
       "Rowinvisile.cias",
       "Rowinvisile.cias",
@@ -509,6 +463,7 @@
       "|"
     ],
     "column_headers": [
+      "[cams Col2B",
       "use",
       "use",
       "use",
@@ -518,22 +473,29 @@
       "use",
       "use",
       "use",
+      "105.50 105,50",
       "|"
     ]
-  },
-  {
-    "value": "Merged5S",
-    "row": 21,
-    "col": 2,
-    "row_headers": [],
-    "column_headers": []
   },
   {
     "value": "62,00",
     "row": 21,
     "col": 14,
-    "row_headers": [],
+    "row_headers": [
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S"
+    ],
     "column_headers": [
+      "[7 Col2A",
       "Ps",
       "|",
       "|",
@@ -542,6 +504,7 @@
       "|",
       "|",
       "|",
+      "2600 26,00",
       "|"
     ]
   },
@@ -549,8 +512,29 @@
     "value": "19,00",
     "row": 21,
     "col": 17,
-    "row_headers": [],
+    "row_headers": [
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S"
+    ],
     "column_headers": [
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
+      "Col2B",
       "|",
       "|"
     ]
@@ -559,8 +543,28 @@
     "value": "62,00",
     "row": 21,
     "col": 19,
-    "row_headers": [],
+    "row_headers": [
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S"
+    ],
     "column_headers": [
+      "| coma Col2A",
+      "| 25,40",
+      "Col2B",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
+      "2520 25,20",
       "|",
       "|"
     ]
@@ -569,8 +573,36 @@
     "value": "19,00",
     "row": 21,
     "col": 21,
-    "row_headers": [],
+    "row_headers": [
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S",
+      "Merged5S"
+    ],
     "column_headers": [
+      "[cams Col2B",
+      "Col3B",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
+      "105.50 105,50",
       "|"
     ]
   }

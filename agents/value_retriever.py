@@ -42,12 +42,12 @@ def retrieve_values_from_grid(grid: List[List[str]]) -> str:
 
     # Helper functions
     def is_numeric(s: str) -> bool:
-        """Check if string contains a numeric value"""
-
-        filtered = re.sub(r"[^0-9,.\-]", "", s)
-        normalized = filtered.replace(".", "").replace(",", ".").replace("-", "").strip()
-        if not s or not isinstance(s, str):
+        token = s.strip()
+        # 1) must look like European decimal with exactly two digits
+        if not re.fullmatch(r"\d{1,5},\d{2}", token):
             return False
+        # 2) now double-check by float-cast on a cleaned version
+        normalized = token.replace(".", "").replace(",", ".")
         try:
             float(normalized)
             return True
