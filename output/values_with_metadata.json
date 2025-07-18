@@ -6,11 +6,10 @@
       "value": "23,00",
       "row_headers": [
         "M1",
+        "Merged1",
         "AA"
       ],
       "column_headers": [
-        "Table Title",
-        "Row title",
         "Col1"
       ],
       "confidence": 96,
@@ -25,6 +24,7 @@
       "value": "25,40",
       "row_headers": [
         "M1",
+        "Merged1",
         "AA"
       ],
       "column_headers": [
@@ -44,6 +44,7 @@
       "value": "115,50",
       "row_headers": [
         "M1",
+        "Merged1",
         "AA"
       ],
       "column_headers": [
@@ -62,13 +63,12 @@
     {
       "value": "24,00",
       "row_headers": [
+        "M1",
         "Merged1",
-        "Invisible.Grid2",
+        "Row.Invisible.Grid2",
         "BB"
       ],
       "column_headers": [
-        "Table Title",
-        "Row title",
         "Col1"
       ],
       "confidence": 95,
@@ -82,8 +82,9 @@
     {
       "value": "25,10",
       "row_headers": [
+        "M1",
         "Merged1",
-        "Invisible.Grid2",
+        "Row.Invisible.Grid2",
         "BB"
       ],
       "column_headers": [
@@ -102,8 +103,9 @@
     {
       "value": "125,50",
       "row_headers": [
+        "M1",
         "Merged1",
-        "Invisible.Grid2",
+        "Row.Invisible.Grid2",
         "BB"
       ],
       "column_headers": [
@@ -122,12 +124,12 @@
     {
       "value": "26,00",
       "row_headers": [
-        "Invisible.Grid3",
-        "cc"
+        "M1",
+        "Merged1",
+        "Row.Invisible.Grid3",
+        "CC"
       ],
       "column_headers": [
-        "Table Title",
-        "Row title",
         "Col1"
       ],
       "confidence": 96,
@@ -141,8 +143,10 @@
     {
       "value": "25,20",
       "row_headers": [
-        "Invisible.Grid3",
-        "cc"
+        "M1",
+        "Merged1",
+        "Row.Invisible.Grid3",
+        "CC"
       ],
       "column_headers": [
         "Col2",
@@ -160,8 +164,10 @@
     {
       "value": "105,50",
       "row_headers": [
-        "Invisible.Grid3",
-        "cc"
+        "M1",
+        "Merged1",
+        "Row.Invisible.Grid3",
+        "CC"
       ],
       "column_headers": [
         "Col2",
@@ -179,8 +185,8 @@
     {
       "value": "50,00",
       "row_headers": [
-        "Invisible.Grid3",
-        "cc"
+        "M1",
+        "Merged1"
       ],
       "column_headers": [
         "Col4",
@@ -197,8 +203,8 @@
     {
       "value": "54,00",
       "row_headers": [
-        "Invisible.Grid3",
-        "cc"
+        "M1",
+        "Merged1"
       ],
       "column_headers": [
         "Col4",
@@ -247,10 +253,12 @@
     {
       "value": "1589,10",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
         "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 90,
@@ -264,6 +272,7 @@
     {
       "value": "1589,10",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
@@ -282,11 +291,10 @@
     {
       "value": "21,00",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
-        "Table Title",
-        "Row title",
         "Col1"
       ],
       "confidence": 96,
@@ -300,9 +308,12 @@
     {
       "value": "135,40",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
+        "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 96,
@@ -316,6 +327,7 @@
     {
       "value": "135,40",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
@@ -334,6 +346,7 @@
     {
       "value": "80,00",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
@@ -351,6 +364,7 @@
     {
       "value": "59,00",
       "row_headers": [
+        "M2",
         "Merged2"
       ],
       "column_headers": [
@@ -368,11 +382,10 @@
     {
       "value": "15,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
-        "Table Title",
-        "Row title",
         "Col1"
       ],
       "confidence": 95,
@@ -386,6 +399,7 @@
     {
       "value": "16,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
@@ -403,6 +417,7 @@
     {
       "value": "45,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
@@ -420,9 +435,12 @@
     {
       "value": "57,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
+        "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 96,
@@ -436,10 +454,12 @@
     {
       "value": "51,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
         "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 96,
@@ -453,6 +473,7 @@
     {
       "value": "57,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
@@ -471,6 +492,7 @@
     {
       "value": "51,00",
       "row_headers": [
+        "M4",
         "Merged4"
       ],
       "column_headers": [
@@ -489,9 +511,12 @@
     {
       "value": "62,00",
       "row_headers": [
+        "M4",
         "Merged5"
       ],
       "column_headers": [
+        "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 96,
@@ -505,10 +530,12 @@
     {
       "value": "19,00",
       "row_headers": [
+        "M4",
         "Merged5"
       ],
       "column_headers": [
         "Col2",
+        "Col2A",
         "Col3A"
       ],
       "confidence": 96,
@@ -522,6 +549,7 @@
     {
       "value": "62,00",
       "row_headers": [
+        "M4",
         "Merged5"
       ],
       "column_headers": [
@@ -540,6 +568,7 @@
     {
       "value": "19,00",
       "row_headers": [
+        "M4",
         "Merged5"
       ],
       "column_headers": [
