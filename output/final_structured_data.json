@@ -1,0 +1,321 @@
+{
+  "extracted_data": [
+    {
+      "value": "23,00",
+      "row_headers": [
+        "M1",
+        "AA"
+      ],
+      "column_headers": [
+        "Colt"
+      ]
+    },
+    {
+      "value": "25,40",
+      "row_headers": [
+        "M1",
+        "AA"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "115,50",
+      "row_headers": [
+        "M1",
+        "AA"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "24,00",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "BB"
+      ],
+      "column_headers": [
+        "Colt"
+      ]
+    },
+    {
+      "value": "25,10",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "BB"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "125,50",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "BB"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "26,00",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Colt"
+      ]
+    },
+    {
+      "value": "25,20",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "105,50",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2h",
+        "Col3B"
+      ]
+    },
+    {
+      "value": "50,00",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "54,00",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "35,00",
+      "row_headers": [
+        "M2"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "35,00",
+      "row_headers": [
+        "M2"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "21,00",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Colt"
+      ]
+    },
+    {
+      "value": "135,40",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "1589,10",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "135,40",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "1589,10",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "80,00",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "59,00",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "15,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Colt"
+      ]
+    },
+    {
+      "value": "57,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "51,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "57,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "51,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "16,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "45,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a",
+        "col4B"
+      ]
+    },
+    {
+      "value": "62,00",
+      "row_headers": [
+        "MergedS"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "19,00",
+      "row_headers": [
+        "MergedS"
+      ],
+      "column_headers": [
+        "Col3A"
+      ]
+    },
+    {
+      "value": "62,00",
+      "row_headers": [
+        "MergedS"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    },
+    {
+      "value": "19,00",
+      "row_headers": [
+        "MergedS"
+      ],
+      "column_headers": [
+        "Col3B"
+      ]
+    }
+  ]
+}

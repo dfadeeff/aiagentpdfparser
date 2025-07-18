@@ -1,0 +1,592 @@
+{
+  "source_pdf": "data/Table-Example-R.pdf",
+  "total_values": 31,
+  "values": [
+    {
+      "value": "23,00",
+      "row_headers": [
+        "M1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "Col1"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 373,
+        "y0": 203,
+        "x1": 396,
+        "y1": 210
+      }
+    },
+    {
+      "value": "25,40",
+      "row_headers": [
+        "M1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 555,
+        "y0": 203,
+        "x1": 578,
+        "y1": 210
+      }
+    },
+    {
+      "value": "115,50",
+      "row_headers": [
+        "M1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 614,
+        "y0": 203,
+        "x1": 641,
+        "y1": 210
+      }
+    },
+    {
+      "value": "24,00",
+      "row_headers": [
+        "M1",
+        "Merged1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "Col1"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 373,
+        "y0": 217,
+        "x1": 396,
+        "y1": 225
+      }
+    },
+    {
+      "value": "25,10",
+      "row_headers": [
+        "M1",
+        "Merged1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 555,
+        "y0": 217,
+        "x1": 578,
+        "y1": 225
+      }
+    },
+    {
+      "value": "125,50",
+      "row_headers": [
+        "M1",
+        "Merged1",
+        "Row.",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "AA",
+        "BB"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 614,
+        "y0": 217,
+        "x1": 641,
+        "y1": 225
+      }
+    },
+    {
+      "value": "26,00",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "BB"
+      ],
+      "column_headers": [
+        "Col1"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 373,
+        "y0": 231,
+        "x1": 396,
+        "y1": 239
+      }
+    },
+    {
+      "value": "25,20",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "BB"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B"
+      ],
+      "confidence": 93,
+      "bbox": {
+        "x0": 555,
+        "y0": 231,
+        "x1": 578,
+        "y1": 238
+      }
+    },
+    {
+      "value": "105,50",
+      "row_headers": [
+        "Merged1",
+        "Row.Invisible.Grid2",
+        "Row.Invisible.Grid3",
+        "cc",
+        "BB"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 614,
+        "y0": 231,
+        "x1": 641,
+        "y1": 238
+      }
+    },
+    {
+      "value": "50,00",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a"
+      ],
+      "confidence": 93,
+      "bbox": {
+        "x0": 677,
+        "y0": 238,
+        "x1": 699,
+        "y1": 246
+      }
+    },
+    {
+      "value": "54,00",
+      "row_headers": [
+        "Row.Invisible.Grid3",
+        "cc"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4B"
+      ],
+      "confidence": 93,
+      "bbox": {
+        "x0": 737,
+        "y0": 238,
+        "x1": 760,
+        "y1": 246
+      }
+    },
+    {
+      "value": "35,00",
+      "row_headers": [],
+      "column_headers": [
+        "eas",
+        "Col3A"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 464,
+        "y0": 274,
+        "x1": 487,
+        "y1": 282
+      }
+    },
+    {
+      "value": "35,00",
+      "row_headers": [],
+      "column_headers": [
+        "Col2B",
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 93,
+      "bbox": {
+        "x0": 585,
+        "y0": 274,
+        "x1": 608,
+        "y1": 281
+      }
+    },
+    {
+      "value": "1589,10",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col3A",
+        "|"
+      ],
+      "confidence": 90,
+      "bbox": {
+        "x0": 490,
+        "y0": 302,
+        "x1": 522,
+        "y1": 315
+      }
+    },
+    {
+      "value": "1589,10",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 92,
+      "bbox": {
+        "x0": 611,
+        "y0": 302,
+        "x1": 643,
+        "y1": 315
+      }
+    },
+    {
+      "value": "21,00",
+      "row_headers": [
+        "M2",
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col1"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 373,
+        "y0": 303,
+        "x1": 396,
+        "y1": 310
+      }
+    },
+    {
+      "value": "135,40",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "eas",
+        "Col3A"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 432,
+        "y0": 304,
+        "x1": 459,
+        "y1": 312
+      }
+    },
+    {
+      "value": "135,40",
+      "row_headers": [
+        "M2",
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B",
+        "|"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 553,
+        "y0": 304,
+        "x1": 580,
+        "y1": 311
+      }
+    },
+    {
+      "value": "80,00",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a"
+      ],
+      "confidence": 94,
+      "bbox": {
+        "x0": 676,
+        "y0": 310,
+        "x1": 699,
+        "y1": 318
+      }
+    },
+    {
+      "value": "59,00",
+      "row_headers": [
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4B"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 737,
+        "y0": 310,
+        "x1": 760,
+        "y1": 318
+      }
+    },
+    {
+      "value": "15,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col1"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 374,
+        "y0": 418,
+        "x1": 396,
+        "y1": 425
+      }
+    },
+    {
+      "value": "16,00",
+      "row_headers": [
+        "Merged4",
+        "|"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4a"
+      ],
+      "confidence": 94,
+      "bbox": {
+        "x0": 677,
+        "y0": 418,
+        "x1": 699,
+        "y1": 426
+      }
+    },
+    {
+      "value": "45,00",
+      "row_headers": [
+        "Merged4",
+        "|"
+      ],
+      "column_headers": [
+        "Col4",
+        "Col4B"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 737,
+        "y0": 418,
+        "x1": 760,
+        "y1": 425
+      }
+    },
+    {
+      "value": "57,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "eas",
+        "Col3A"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 434,
+        "y0": 419,
+        "x1": 456,
+        "y1": 426
+      }
+    },
+    {
+      "value": "51,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col3A",
+        "|"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 495,
+        "y0": 419,
+        "x1": 517,
+        "y1": 426
+      }
+    },
+    {
+      "value": "57,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B",
+        "|"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 555,
+        "y0": 419,
+        "x1": 578,
+        "y1": 426
+      }
+    },
+    {
+      "value": "51,00",
+      "row_headers": [
+        "Merged4"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 616,
+        "y0": 419,
+        "x1": 638,
+        "y1": 426
+      }
+    },
+    {
+      "value": "62,00",
+      "row_headers": [
+        "Merged5",
+        "Merged4"
+      ],
+      "column_headers": [
+        "eas",
+        "Col3A"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 434,
+        "y0": 433,
+        "x1": 456,
+        "y1": 441
+      }
+    },
+    {
+      "value": "19,00",
+      "row_headers": [
+        "Merged5",
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col3A",
+        "|"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 495,
+        "y0": 433,
+        "x1": 517,
+        "y1": 441
+      }
+    },
+    {
+      "value": "62,00",
+      "row_headers": [
+        "Merged5",
+        "Merged4"
+      ],
+      "column_headers": [
+        "Col2",
+        "Col2B",
+        "Col3B",
+        "|"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 555,
+        "y0": 433,
+        "x1": 578,
+        "y1": 441
+      }
+    },
+    {
+      "value": "19,00",
+      "row_headers": [
+        "Merged5",
+        "Merged4"
+      ],
+      "column_headers": [
+        "eo",
+        "Col3B"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 616,
+        "y0": 433,
+        "x1": 638,
+        "y1": 441
+      }
+    }
+  ]
+}
