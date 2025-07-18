@@ -7,6 +7,7 @@
       "row_headers": [
         "M1",
         "Merged1",
+        "Row.Invisible.Grid1",
         "AA"
       ],
       "column_headers": [
@@ -84,7 +85,6 @@
       "row_headers": [
         "M1",
         "Merged1",
-        "Row.Invisible.Grid2",
         "BB"
       ],
       "column_headers": [
@@ -105,7 +105,6 @@
       "row_headers": [
         "M1",
         "Merged1",
-        "Row.Invisible.Grid2",
         "BB"
       ],
       "column_headers": [
@@ -126,8 +125,7 @@
       "row_headers": [
         "M1",
         "Merged1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Row.Invisible.Grid3"
       ],
       "column_headers": [
         "Col1"
@@ -144,9 +142,7 @@
       "value": "25,20",
       "row_headers": [
         "M1",
-        "Merged1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1"
       ],
       "column_headers": [
         "Col2",
@@ -165,9 +161,7 @@
       "value": "105,50",
       "row_headers": [
         "M1",
-        "Merged1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1"
       ],
       "column_headers": [
         "Col2",
@@ -189,8 +183,7 @@
         "Merged1"
       ],
       "column_headers": [
-        "Col4",
-        "Col4A"
+        "Col4"
       ],
       "confidence": 93,
       "bbox": {
@@ -220,7 +213,10 @@
     },
     {
       "value": "35,00",
-      "row_headers": [],
+      "row_headers": [
+        "M1",
+        "Merged1"
+      ],
       "column_headers": [
         "Col2",
         "Col2A",
@@ -236,7 +232,10 @@
     },
     {
       "value": "35,00",
-      "row_headers": [],
+      "row_headers": [
+        "M1",
+        "Merged1"
+      ],
       "column_headers": [
         "Col2",
         "Col2B",
@@ -350,8 +349,7 @@
         "Merged2"
       ],
       "column_headers": [
-        "Col4",
-        "Col4A"
+        "Col4"
       ],
       "confidence": 94,
       "bbox": {
@@ -403,8 +401,7 @@
         "Merged4"
       ],
       "column_headers": [
-        "Col4",
-        "Col4A"
+        "Col4"
       ],
       "confidence": 94,
       "bbox": {
