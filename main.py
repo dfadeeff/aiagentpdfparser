@@ -4,7 +4,7 @@ import os
 import json
 from pdf_parser import extract_all_elements
 from grid_builder import build_logical_grid
-from agents.value_retriever import retrieve_values_from_grid
+from agents.value_retriever import retrieve_values_from_grid  # Fixed import
 
 
 def print_grid_debug(grid):
