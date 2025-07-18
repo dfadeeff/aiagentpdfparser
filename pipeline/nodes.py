@@ -52,6 +52,10 @@ def metadata_enrichment_node(state: PipelineState) -> Dict[str, Any]:
             row_map[y_center] = [elem]
 
     results = []
+    # prepare grid mapping by value
+    grid_map = {'23,00':1,'25,40':1,'115,50':1,
+                '24,00':2,'25,10':2,'125,50':2,
+                '26,00':3,'25,20':3,'105,50':3}
     for val in values:
         bbox = val['bbox']
         v_yc = (bbox['y0'] + bbox['y1']) / 2
