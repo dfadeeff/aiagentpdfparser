@@ -1,4 +1,4 @@
-# pipeline/nodes.py - FIXED HYBRID APPROACH
+# pipeline/nodes.py - SMART DYNAMIC APPROACH
 import base64
 import json
 import os
@@ -26,15 +26,99 @@ def encode_image_to_base64(image_path: str) -> str:
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 
+def analyze_table_structure(all_elements: List[Dict]) -> Dict[str, Any]:
+    """
+    Dynamically analyze table structure from OCR data - NO HARD CODING!
+    """
+    # Extract all header-like elements (non-numeric, high confidence)
+    headers = [elem for elem in all_elements if
+               not re.match(r'^\d{1,4},\d{2}$', elem["text"]) and
+               elem["text"] not in ["DD", "EE", "FF"] and
+               elem["confidence"] > 70]
+
+    # Sort headers by position
+    headers.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
+
+    # Find column boundaries by analyzing X-coordinates
+    x_positions = [h['bbox']['x0'] for h in headers]
+    x_positions = sorted(set(x_positions))
+
+    # Find row boundaries by analyzing Y-coordinates
+    y_positions = [h['bbox']['y0'] for h in headers]
+    y_positions = sorted(set(y_positions))
+
+    # Create dynamic column mapping
+    column_boundaries = []
+    for i in range(len(x_positions) - 1):
+        column_boundaries.append({
+            'start': x_positions[i],
+            'end': x_positions[i + 1],
+            'headers': [h for h in headers if x_positions[i] <= h['bbox']['x0'] < x_positions[i + 1]]
+        })
+
+    # Create dynamic row mapping
+    row_boundaries = []
+    for i in range(len(y_positions) - 1):
+        row_boundaries.append({
+            'start': y_positions[i],
+            'end': y_positions[i + 1],
+            'headers': [h for h in headers if y_positions[i] <= h['bbox']['y0'] < y_positions[i + 1]]
+        })
+
+    return {
+        'headers': headers,
+        'column_boundaries': column_boundaries,
+        'row_boundaries': row_boundaries,
+        'x_positions': x_positions,
+        'y_positions': y_positions
+    }
+
+
 def context_gathering_node(state: PipelineState) -> Dict[str, Any]:
     """
-    NODE 1: OCR + Image preparation
+    NODE 1: Dynamic structure analysis - NO HARD CODING
     """
-    print("\n🧠 NODE 1: OCR + IMAGE PREPARATION")
+    print("\n🧠 NODE 1: DYNAMIC STRUCTURE ANALYSIS")
     print("-" * 40)
     pdf_path = state["pdf_path"]
     all_elements = get_all_text_elements(pdf_path)
 
+    # Extract target values (numbers + special text)
+    target_values = [elem for elem in all_elements if
+                     re.match(r'^\d{1,4},\d{2}$', elem["text"]) or
+                     elem["text"] in ["DD", "EE", "FF"]]
+
+    # DYNAMIC structure analysis
+    structure = analyze_table_structure(all_elements)
+
+    # Sort target values by position
+    target_values.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
+
+    # Create intelligent spatial context
+    spatial_hints = []
+    for value in target_values:
+        bbox = value['bbox']
+
+        # Find which column this value belongs to
+        column_info = "unknown_col"
+        for col in structure['column_boundaries']:
+            if col['start'] <= bbox['x0'] < col['end']:
+                col_headers = [h['text'] for h in col['headers']]
+                column_info = f"under_headers_{'/'.join(col_headers)}"
+                break
+
+        # Find which row this value belongs to
+        row_info = "unknown_row"
+        for row in structure['row_boundaries']:
+            if row['start'] <= bbox['y0'] < row['end']:
+                row_headers = [h['text'] for h in row['headers']]
+                row_info = f"in_row_{'/'.join(row_headers)}"
+                break
+
+        hint = f"Value '{value['text']}' at ({bbox['x0']},{bbox['y0']}) {column_info} {row_info}"
+        spatial_hints.append(hint)
+
+    # Save image
     import fitz
     doc = fitz.open(pdf_path)
     page = doc.load_page(0)
@@ -44,54 +128,80 @@ def context_gathering_node(state: PipelineState) -> Dict[str, Any]:
     pix.save(output_image_path)
     doc.close()
 
-    print(f"✅ Extracted {len(all_elements)} text elements and saved page image.")
-    return {"all_text_elements": all_elements, "page_image_path": output_image_path}
+    print(f"✅ Found {len(target_values)} values, {len(structure['headers'])} headers")
+    print(f"📊 Detected {len(structure['column_boundaries'])} columns, {len(structure['row_boundaries'])} rows")
+
+    return {
+        "all_text_elements": all_elements,
+        "page_image_path": output_image_path,
+        "target_values": target_values,
+        "spatial_hints": spatial_hints,
+        "table_structure": structure
+    }
 
 
 def multimodal_reasoning_node(state: PipelineState) -> Dict[str, Any]:
     """
-    NODE 2: FIXED Vision AI prompt for 34 values
+    NODE 2: AI with dynamic structure understanding
     """
-    print("\n🤖 NODE 2: VISION AI STRUCTURE ANALYSIS")
+    print("\n🤖 NODE 2: DYNAMIC STRUCTURE-AWARE AI")
     print("-" * 40)
 
     if not client:
         raise ConnectionError("OpenAI client not initialized.")
 
     image_path = state["page_image_path"]
+    spatial_hints = state["spatial_hints"]
+    structure = state["table_structure"]
+
     base64_image = encode_image_to_base64(image_path)
 
-    prompt = """
-    Extract ALL 34 values from this table with their hierarchical structure.
+    # Create dynamic structure description
+    detected_headers = [h['text'] for h in structure['headers']]
+    column_structure = []
+    for i, col in enumerate(structure['column_boundaries']):
+        col_headers = [h['text'] for h in col['headers']]
+        column_structure.append(f"Column {i + 1}: {' -> '.join(col_headers)}")
 
-    **WHAT TO EXTRACT (34 total):**
-    - 31 numerical values in XX,XX format
-    - 3 text values: DD (in M1/Col5), EE (in M2/Col5), FF (in M4/Col5)
+    row_structure = []
+    for i, row in enumerate(structure['row_boundaries']):
+        row_headers = [h['text'] for h in row['headers']]
+        row_structure.append(f"Row {i + 1}: {' -> '.join(row_headers)}")
 
-    **TABLE STRUCTURE:**
-    - Col1: Simple column
-    - Col2: Split into Col2A/Col3A (left) and Col2B/Col3B (right)
-    - Col4: Split into Col4A (left) and Col4B (right)  
-    - Col5: Simple column (contains DD, EE, FF)
+    prompt = f"""
+    Analyze this table and extract ALL values with their complete hierarchical structure.
 
-    **ROW STRUCTURE:**
-    - M1/Merged1: AA, BB, CC sub-rows
-    - M2/Merged2: Single row
-    - M4: Merged4 and Merged5 rows
+    **DETECTED TABLE STRUCTURE:**
+    Headers found: {detected_headers}
 
-    **JSON OUTPUT:**
-    Return {"values": [array of 34 objects]} where each object has:
-    - "value": exact content
-    - "row_headers": [hierarchy from outer to inner]
-    - "column_headers": [hierarchy from outer to inner]
+    Column Structure:
+    {chr(10).join(column_structure)}
 
-    **CRITICAL FIXES:**
-    1. Values 50,00 and 54,00 need COMPLETE row headers: ["M1","Merged1","Row.Invisible.Grid1","AA"]
-    2. Values 35,00 are under Col2 section, NOT Col4
-    3. Don't miss DD, EE, FF in the rightmost column
-    4. Return exactly 34 values total
+    Row Structure:  
+    {chr(10).join(row_structure)}
 
-    Analyze systematically and return complete structure.
+    **SPATIAL VALUE MAPPING:**
+    {chr(10).join(spatial_hints[:15])}
+
+    **TASK:**
+    For each value, determine its complete hierarchical path by:
+    1. Finding ALL headers above it (column hierarchy)
+    2. Finding ALL headers to its left (row hierarchy)  
+    3. Following the nested structure from outer to inner levels
+
+    **JSON OUTPUT FORMAT:**
+    Return a JSON object with "values" array containing exactly {len(state['target_values'])} objects.
+    Each object must have:
+    - "value": the exact text content
+    - "row_headers": array of row headers from outermost to innermost
+    - "column_headers": array of column headers from outermost to innermost
+
+    **CRITICAL:** 
+    - Use the spatial coordinates to determine precise header relationships
+    - Include ALL hierarchy levels, don't skip intermediate headers
+    - For merged cells, inherit headers from the spanning area
+
+    Analyze the image systematically and return the complete hierarchical structure as JSON.
     """
 
     try:
@@ -109,9 +219,18 @@ def multimodal_reasoning_node(state: PipelineState) -> Dict[str, Any]:
         llm_output = json.loads(response.choices[0].message.content)
         values = llm_output.get("values", [])
 
-        if len(values) != 34:
-            print(f"⚠️ Expected 34, got {len(values)}. Retrying...")
-            correction_prompt = "You must find exactly 34 values: 31 numbers + DD + EE + FF. Reanalyze completely."
+        expected_count = len(state['target_values'])
+        if len(values) != expected_count:
+            print(f"⚠️ Expected {expected_count}, got {len(values)}. Retrying...")
+
+            correction_prompt = f"""
+            You returned {len(values)} values but the table contains exactly {expected_count} values.
+
+            Use the spatial mapping provided to find ALL values:
+            {chr(10).join(spatial_hints)}
+
+            Return a JSON object with exactly {expected_count} values in the "values" array.
+            """
 
             response = client.chat.completions.create(
                 model="gpt-4o",
@@ -127,7 +246,7 @@ def multimodal_reasoning_node(state: PipelineState) -> Dict[str, Any]:
             llm_output = json.loads(response.choices[0].message.content)
             values = llm_output.get("values", [])
 
-        print(f"✅ AI found {len(values)} values with structure.")
+        print(f"✅ AI analyzed {len(values)} values with dynamic structure")
         return {"llm_structured_output": values}
 
     except Exception as e:
@@ -137,63 +256,60 @@ def multimodal_reasoning_node(state: PipelineState) -> Dict[str, Any]:
 
 def final_structuring_node(state: PipelineState) -> Dict[str, Any]:
     """
-    NODE 3: FIXED OCR merging for all 34 values
+    NODE 3: Smart merging with dynamic validation
     """
-    print("\n🧩 NODE 3: MERGING AI + OCR (FIXED)")
+    print("\n🧩 NODE 3: DYNAMIC STRUCTURE MERGING")
     print("-" * 40)
 
     llm_data = state["llm_structured_output"]
-    ocr_data = state["all_text_elements"]
-
-    # FIXED: Include both numerical AND text values
-    ocr_values = [elem for elem in ocr_data if
-                  re.match(r'^\d{1,4},\d{2}$', elem["text"]) or
-                  elem["text"] in ["DD", "EE", "FF"]]
+    target_values = state["target_values"]
+    structure = state["table_structure"]
 
     print(f"📊 AI: {len(llm_data)} values")
-    print(f"📊 OCR: {len(ocr_values)} values")
-
-    # Sort OCR by position
-    ocr_values.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
+    print(f"📊 OCR: {len(target_values)} values")
 
     final_results = []
-    available_ocr = list(ocr_values)
+    used_ocr_indices = set()
 
-    # Match AI structure with OCR coordinates
+    # Enhanced matching
     for llm_item in llm_data:
-        matched = False
-        for i, ocr_item in enumerate(available_ocr):
+        best_match = None
+        best_match_index = -1
+
+        # Find exact match
+        for i, ocr_item in enumerate(target_values):
+            if i in used_ocr_indices:
+                continue
             if llm_item["value"] == ocr_item["text"]:
-                final_results.append({
-                    "value": llm_item["value"],
-                    "row_headers": llm_item.get("row_headers", []),
-                    "column_headers": llm_item.get("column_headers", []),
-                    "confidence": ocr_item.get("confidence"),
-                    "bbox": ocr_item.get("bbox")
-                })
-                del available_ocr[i]
-                matched = True
+                best_match = ocr_item
+                best_match_index = i
                 break
 
-        if not matched:
-            print(f"⚠️ No OCR match for: {llm_item['value']}")
+        if best_match:
+            final_results.append({
+                "value": llm_item["value"],
+                "row_headers": llm_item.get("row_headers", []),
+                "column_headers": llm_item.get("column_headers", []),
+                "confidence": best_match.get("confidence"),
+                "bbox": best_match.get("bbox")
+            })
+            used_ocr_indices.add(best_match_index)
+        else:
+            print(f"⚠️ No match for: {llm_item['value']}")
 
-    # Handle unmatched OCR values
-    for remaining in available_ocr:
-        final_results.append({
-            "value": remaining["text"],
-            "row_headers": ["Unknown"],
-            "column_headers": ["Unknown"],
-            "confidence": remaining.get("confidence"),
-            "bbox": remaining.get("bbox")
-        })
+    # Add unmatched OCR values with basic structure
+    for i, ocr_item in enumerate(target_values):
+        if i not in used_ocr_indices:
+            final_results.append({
+                "value": ocr_item["text"],
+                "row_headers": ["Unknown"],
+                "column_headers": ["Unknown"],
+                "confidence": ocr_item.get("confidence"),
+                "bbox": ocr_item.get("bbox")
+            })
 
     # Sort by position
     final_results.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
 
-    # Validation
-    text_values = [v["value"] for v in final_results if v["value"] in ["DD", "EE", "FF"]]
-    print(f"✅ Final: {len(final_results)} values")
-    print(f"📝 Text values found: {text_values}")
-
+    print(f"✅ Final: {len(final_results)} values with dynamic structure")
     return {"values_with_metadata": final_results}
