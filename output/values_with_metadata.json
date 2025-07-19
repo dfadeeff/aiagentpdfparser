@@ -1,6 +1,6 @@
 {
   "source_pdf": "data/Table-Example-R.pdf",
-  "total_values": 31,
+  "total_values": 34,
   "values": [
     {
       "value": "23,00",
@@ -31,8 +31,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 95,
       "bbox": {
@@ -92,8 +92,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 96,
       "bbox": {
@@ -125,6 +125,23 @@
       }
     },
     {
+      "value": "DD",
+      "row_headers": [
+        "M1",
+        "Merged1"
+      ],
+      "column_headers": [
+        "Col5"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 803,
+        "y0": 217,
+        "x1": 815,
+        "y1": 223
+      }
+    },
+    {
       "value": "26,00",
       "row_headers": [
         "M1",
@@ -153,8 +170,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 93,
       "bbox": {
@@ -190,8 +207,8 @@
       "row_headers": [
         "M1",
         "Merged1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Row.Invisible.Grid1",
+        "AA"
       ],
       "column_headers": [
         "Col4",
@@ -210,8 +227,8 @@
       "row_headers": [
         "M1",
         "Merged1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Row.Invisible.Grid1",
+        "AA"
       ],
       "column_headers": [
         "Col4",
@@ -227,11 +244,13 @@
     },
     {
       "value": "35,00",
-      "row_headers": [],
+      "row_headers": [
+        "M1",
+        "Merged1"
+      ],
       "column_headers": [
         "Col2",
-        "Col2A",
-        "Col3A"
+        "Col2A"
       ],
       "confidence": 96,
       "bbox": {
@@ -243,11 +262,13 @@
     },
     {
       "value": "35,00",
-      "row_headers": [],
+      "row_headers": [
+        "M1",
+        "Merged1"
+      ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2B"
       ],
       "confidence": 93,
       "bbox": {
@@ -265,8 +286,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2A",
-        "Col3A"
+        "Col2B",
+        "Col3B"
       ],
       "confidence": 90,
       "bbox": {
@@ -313,6 +334,23 @@
       }
     },
     {
+      "value": "EE",
+      "row_headers": [
+        "M2",
+        "Merged2"
+      ],
+      "column_headers": [
+        "Col5"
+      ],
+      "confidence": 96,
+      "bbox": {
+        "x0": 805,
+        "y0": 303,
+        "x1": 814,
+        "y1": 309
+      }
+    },
+    {
       "value": "135,40",
       "row_headers": [
         "M2",
@@ -339,8 +377,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 96,
       "bbox": {
@@ -440,6 +478,23 @@
       }
     },
     {
+      "value": "FF",
+      "row_headers": [
+        "M4",
+        "Merged5"
+      ],
+      "column_headers": [
+        "Col5"
+      ],
+      "confidence": 95,
+      "bbox": {
+        "x0": 805,
+        "y0": 418,
+        "x1": 814,
+        "y1": 424
+      }
+    },
+    {
       "value": "57,00",
       "row_headers": [
         "M4",
@@ -466,8 +521,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2A",
-        "Col3A"
+        "Col2B",
+        "Col3B"
       ],
       "confidence": 96,
       "bbox": {
@@ -485,8 +540,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 96,
       "bbox": {
@@ -542,8 +597,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2A",
-        "Col3A"
+        "Col2B",
+        "Col3B"
       ],
       "confidence": 96,
       "bbox": {
@@ -561,8 +616,8 @@
       ],
       "column_headers": [
         "Col2",
-        "Col2B",
-        "Col3B"
+        "Col2A",
+        "Col3A"
       ],
       "confidence": 96,
       "bbox": {

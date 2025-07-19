@@ -1,128 +1,199 @@
-# pipeline/nodes.py
+# pipeline/nodes.py - FIXED HYBRID APPROACH
+import base64
+import json
+import os
 import re
 from typing import Dict, List, Any
+
+try:
+    from openai import OpenAI
+
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+except ImportError:
+    print("FATAL ERROR: The 'openai' library is not installed.")
+    client = None
+except Exception:
+    print("FATAL ERROR: OPENAI_API_KEY environment variable not set.")
+    client = None
+
 from pipeline.state import PipelineState
-
-# Import YOUR WORKING EXTRACTOR
-from tools.extractor import extract_values_from_pdf, get_all_text_elements
+from tools.extractor import get_all_text_elements
 
 
-def extraction_node(state: PipelineState) -> Dict[str, Any]:
+def encode_image_to_base64(image_path: str) -> str:
+    """Encodes an image file to a base64 string for the API call."""
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+
+def context_gathering_node(state: PipelineState) -> Dict[str, Any]:
     """
-    NODE 1: Extracts raw data from the PDF.
+    NODE 1: OCR + Image preparation
     """
-    print("\n🔍 NODE 1: EXTRACTION")
+    print("\n🧠 NODE 1: OCR + IMAGE PREPARATION")
     print("-" * 40)
     pdf_path = state["pdf_path"]
-    values = extract_values_from_pdf(pdf_path)
-    print(f"✅ Extracted {len(values)} numeric values.")
-    return {"extracted_values": values}
+    all_elements = get_all_text_elements(pdf_path)
+
+    import fitz
+    doc = fitz.open(pdf_path)
+    page = doc.load_page(0)
+    pix = page.get_pixmap(matrix=fitz.Matrix(3, 3))
+    output_image_path = "output/page_image.png"
+    os.makedirs("output", exist_ok=True)
+    pix.save(output_image_path)
+    doc.close()
+
+    print(f"✅ Extracted {len(all_elements)} text elements and saved page image.")
+    return {"all_text_elements": all_elements, "page_image_path": output_image_path}
 
 
-def metadata_enrichment_node(state: PipelineState) -> Dict[str, Any]:
+def multimodal_reasoning_node(state: PipelineState) -> Dict[str, Any]:
     """
-    NODE 2: Deterministically assigns all row and column headers based on clean,
-    unambiguous positional rules. This single node contains all the core logic.
+    NODE 2: FIXED Vision AI prompt for 34 values
     """
-    print("\n📊 NODE 2: APPLYING DETERMINISTIC STRUCTURAL RULES")
+    print("\n🤖 NODE 2: VISION AI STRUCTURE ANALYSIS")
     print("-" * 40)
 
-    values = state["extracted_values"]
-    results = []
+    if not client:
+        raise ConnectionError("OpenAI client not initialized.")
 
-    for value in values:
-        v_bbox = value["bbox"]
-        v_x_center = (v_bbox["x0"] + v_bbox["x1"]) / 2
-        v_y_center = (v_bbox["y0"] + v_bbox["y1"]) / 2
+    image_path = state["page_image_path"]
+    base64_image = encode_image_to_base64(image_path)
 
-        row_headers = []
-        col_headers = []
+    prompt = """
+    Extract ALL 34 values from this table with their hierarchical structure.
 
-        # --- ROW HEADER LOGIC ---
-        # This is a set of clear, non-overlapping rules based on the visual layout.
+    **WHAT TO EXTRACT (34 total):**
+    - 31 numerical values in XX,XX format
+    - 3 text values: DD (in M1/Col5), EE (in M2/Col5), FF (in M4/Col5)
 
-        # Rule for Block M1/Merged1 (y: 200 -> 255)
-        if 200 <= v_y_center < 290:
-            major_headers = ["M1", "Merged1"]
-            sub_row_headers = []
-            if 200 <= v_y_center < 215:  # This is the "AA" row.
-                sub_row_headers = ["Row.Invisible.Grid1", "AA"]
-            elif 215 <= v_y_center < 230:  # This is the "BB" row.
-                sub_row_headers = ["Row.Invisible.Grid2", "BB"]
-            elif 230 <= v_y_center < 255:  # This is the "CC" row, which also GOVERNS the 50,00 and 54,00 values.
-                sub_row_headers = ["Row.Invisible.Grid3", "CC"]
-            row_headers = major_headers + sub_row_headers
+    **TABLE STRUCTURE:**
+    - Col1: Simple column
+    - Col2: Split into Col2A/Col3A (left) and Col2B/Col3B (right)
+    - Col4: Split into Col4A (left) and Col4B (right)  
+    - Col5: Simple column (contains DD, EE, FF)
 
-        # Rule for Block M2/Merged2
-        elif 290 <= v_y_center < 350:
-            row_headers = ["M2", "Merged2"]
+    **ROW STRUCTURE:**
+    - M1/Merged1: AA, BB, CC sub-rows
+    - M2/Merged2: Single row
+    - M4: Merged4 and Merged5 rows
 
-        # Rule for Block M4/Merged4
-        elif 415 <= v_y_center < 430:
-            row_headers = ["M4", "Merged4"]
+    **JSON OUTPUT:**
+    Return {"values": [array of 34 objects]} where each object has:
+    - "value": exact content
+    - "row_headers": [hierarchy from outer to inner]
+    - "column_headers": [hierarchy from outer to inner]
 
-        # Rule for Block M4/Merged5
-        elif 430 <= v_y_center < 450:
-            row_headers = ["M4", "Merged5"]
+    **CRITICAL FIXES:**
+    1. Values 50,00 and 54,00 need COMPLETE row headers: ["M1","Merged1","Row.Invisible.Grid1","AA"]
+    2. Values 35,00 are under Col2 section, NOT Col4
+    3. Don't miss DD, EE, FF in the rightmost column
+    4. Return exactly 34 values total
 
-        # --- COLUMN HEADER LOGIC ---
-        # Based on stable X-coordinates.
-        if 370 <= v_x_center <= 400:
-            col_headers = ["Col1"]
-        elif 430 <= v_x_center <= 525:
-            col_headers = ["Col2", "Col2A", "Col3A"]
-        elif 550 <= v_x_center <= 640:
-            col_headers = ["Col2", "Col2B", "Col3B"]
-        elif 670 <= v_x_center <= 700:
-            col_headers = ["Col4", "Col4A"]
-        elif 730 <= v_x_center <= 760:
-            col_headers = ["Col4", "Col4B"]
+    Analyze systematically and return complete structure.
+    """
 
-        # --- EXCEPTION HANDLING ---
-        # The '35,00' values are a true structural anomaly that must be handled separately.
-        if value["value"] == "35,00" and 270 <= v_y_center <= 285:
-            row_headers = []  # They have no row headers. This overrides all other rules.
-            if v_x_center < 500:
-                col_headers = ["Col2", "Col2A", "Col3A"]
-            else:
-                col_headers = ["Col2", "Col2B", "Col3B"]
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "user", "content": [
+                    {"type": "text", "text": prompt},
+                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}"}},
+                ]},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.0
+        )
+        llm_output = json.loads(response.choices[0].message.content)
+        values = llm_output.get("values", [])
 
-        results.append({
-            "value": value["value"],
-            "row_headers": row_headers,
-            "column_headers": col_headers,
-            "confidence": value["confidence"],
-            "bbox": value["bbox"]
+        if len(values) != 34:
+            print(f"⚠️ Expected 34, got {len(values)}. Retrying...")
+            correction_prompt = "You must find exactly 34 values: 31 numbers + DD + EE + FF. Reanalyze completely."
+
+            response = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "user", "content": [
+                        {"type": "text", "text": correction_prompt},
+                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}"}},
+                    ]},
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.0
+            )
+            llm_output = json.loads(response.choices[0].message.content)
+            values = llm_output.get("values", [])
+
+        print(f"✅ AI found {len(values)} values with structure.")
+        return {"llm_structured_output": values}
+
+    except Exception as e:
+        print(f"❌ AI analysis failed: {e}")
+        return {"llm_structured_output": []}
+
+
+def final_structuring_node(state: PipelineState) -> Dict[str, Any]:
+    """
+    NODE 3: FIXED OCR merging for all 34 values
+    """
+    print("\n🧩 NODE 3: MERGING AI + OCR (FIXED)")
+    print("-" * 40)
+
+    llm_data = state["llm_structured_output"]
+    ocr_data = state["all_text_elements"]
+
+    # FIXED: Include both numerical AND text values
+    ocr_values = [elem for elem in ocr_data if
+                  re.match(r'^\d{1,4},\d{2}$', elem["text"]) or
+                  elem["text"] in ["DD", "EE", "FF"]]
+
+    print(f"📊 AI: {len(llm_data)} values")
+    print(f"📊 OCR: {len(ocr_values)} values")
+
+    # Sort OCR by position
+    ocr_values.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
+
+    final_results = []
+    available_ocr = list(ocr_values)
+
+    # Match AI structure with OCR coordinates
+    for llm_item in llm_data:
+        matched = False
+        for i, ocr_item in enumerate(available_ocr):
+            if llm_item["value"] == ocr_item["text"]:
+                final_results.append({
+                    "value": llm_item["value"],
+                    "row_headers": llm_item.get("row_headers", []),
+                    "column_headers": llm_item.get("column_headers", []),
+                    "confidence": ocr_item.get("confidence"),
+                    "bbox": ocr_item.get("bbox")
+                })
+                del available_ocr[i]
+                matched = True
+                break
+
+        if not matched:
+            print(f"⚠️ No OCR match for: {llm_item['value']}")
+
+    # Handle unmatched OCR values
+    for remaining in available_ocr:
+        final_results.append({
+            "value": remaining["text"],
+            "row_headers": ["Unknown"],
+            "column_headers": ["Unknown"],
+            "confidence": remaining.get("confidence"),
+            "bbox": remaining.get("bbox")
         })
 
-    print(f"✅ Correctly assigned headers to {len(results)} values.")
-    return {"values_with_metadata": results}
+    # Sort by position
+    final_results.sort(key=lambda x: (x['bbox']['y0'], x['bbox']['x0']))
 
+    # Validation
+    text_values = [v["value"] for v in final_results if v["value"] in ["DD", "EE", "FF"]]
+    print(f"✅ Final: {len(final_results)} values")
+    print(f"📝 Text values found: {text_values}")
 
-def cleaning_node(state: PipelineState) -> Dict[str, Any]:
-    """
-    NODE 3: Performs a minimal, final cleanup for consistent OCR errors.
-    This node is now extremely simple because the previous node does the job correctly.
-    """
-    print("\n🧹 NODE 3: FINAL OCR CLEANUP")
-    print("-" * 40)
-
-    values = state["values_with_metadata"]
-    # This map only contains consistent, known OCR mistakes.
-    replacements = {
-        "Colt": "Col1",
-        "Col4a": "Col4A",
-        "col4B": "Col4B",
-        "Col2h": "Col2B"
-    }
-
-    for value in values:
-        # Clean up column headers using the simple replacement map.
-        cleaned_column_headers = [replacements.get(h, h) for h in value["column_headers"]]
-
-        # Ensure final lists are unique (though they should be already).
-        value["row_headers"] = list(dict.fromkeys(value["row_headers"]))
-        value["column_headers"] = list(dict.fromkeys(cleaned_column_headers))
-
-    print(f"✅ Performed final cleanup on {len(values)} values.")
-    return {"values_with_metadata": values}
+    return {"values_with_metadata": final_results}

@@ -1,6 +1,15 @@
 # run_pipeline.py
 import os
 import json
+
+# --- THE FIX IS HERE ---
+# We MUST load the .env file at the very beginning of the script,
+# so that the OPENAI_API_KEY is available when other modules are imported.
+from dotenv import load_dotenv
+load_dotenv()
+# --- END OF FIX ---
+
+# Now we can import the pipeline components
 from pipeline.graph import create_pipeline
 
 
@@ -9,7 +18,7 @@ def process_pdf_with_metadata(pdf_path: str):
     Main function to process a PDF and extract values with metadata.
     """
     print("=" * 60)
-    print("PDF TABLE EXTRACTION WITH METADATA")
+    print("PDF TABLE EXTRACTION WITH METADATA (Multimodal AI)")
     print("=" * 60)
 
     # Create the pipeline
@@ -22,7 +31,14 @@ def process_pdf_with_metadata(pdf_path: str):
 
     # Run the pipeline
     print("\n🚀 RUNNING PIPELINE...")
-    final_state = app.invoke(initial_state)
+    try:
+        final_state = app.invoke(initial_state)
+    except Exception as e:
+        print("\n" + "="*20 + " FATAL PIPELINE ERROR " + "="*20)
+        print(f"An error occurred during the pipeline execution: {e}")
+        print("Please check your OpenAI API key, account balance, and network connection.")
+        print("="*64)
+        return None
 
     # Get results
     results = final_state.get("values_with_metadata", [])
@@ -38,8 +54,8 @@ def process_pdf_with_metadata(pdf_path: str):
         "values": results
     }
 
-    with open(output_path, "w") as f:
-        json.dump(output_data, f, indent=2)
+    with open(output_path, "w", encoding='utf-8') as f:
+        json.dump(output_data, f, indent=2, ensure_ascii=False)
 
     print(f"\n✅ SUCCESS!")
     print(f"📁 Results saved to: {output_path}")
@@ -58,7 +74,7 @@ def process_pdf_with_metadata(pdf_path: str):
 
 
 if __name__ == "__main__":
-    # Process the PDF
+    # Ensure you have python-dotenv installed: pip install python-dotenv
     pdf_file = "data/Table-Example-R.pdf"
 
     if not os.path.exists(pdf_file):
