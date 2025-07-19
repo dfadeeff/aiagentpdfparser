@@ -4,11 +4,11 @@ A sophisticated AI-powered pipeline for extracting complex hierarchical data fro
 
 ## 🚀 Overview
 
-This project implements a robust, production-ready AI agent that can reliably extract structured data from complex PDF tables with hierarchical headers, merged cells, and nested column structures. The solution combines OCR, computer vision, and GPT-4 Vision to achieve near-perfect extraction accuracy.
+This project implements a robust AI agent that can reliably extract structured data from complex PDF tables with hierarchical headers, merged cells, and nested column structures. The solution combines OCR, computer vision, and GPT-4 Vision to achieve relatively high extraction accuracy.
 
 ### Key Features
 
-- **🎯 High Accuracy**: Achieves 95%+ extraction accuracy on complex tables
+- **🎯 High Accuracy**: Achieves 90%+ extraction accuracy on complex tables
 - **🔧 Dynamic Structure Analysis**: No hard-coded rules - adapts to table layout automatically  
 - **🧠 Multimodal AI**: Combines OCR with GPT-4 Vision for intelligent structure understanding
 - **🔄 Robust Pipeline**: Built with LangGraph for reliable, deterministic workflows
@@ -295,9 +295,9 @@ def extract_values_from_pdf(pdf_path: str):
     """Legacy function - extracts only numeric values matching ^\d{1,4},\d{2}$"""
 ```
 
-### 🎯 **Why This Design Is Brilliant**
+### 🎯 **Why This Design Is Robust**
 
-1. **🔒 Deterministic**: Same input → Same output (no AI randomness in flow)
+1. **🔒 Hybrid**: Combines deterministic OCR part with AI vision
 2. **🐛 Debuggable**: Can inspect state at each station
 3. **🔧 Modular**: Easy to swap out or improve individual stations  
 4. **📊 Stateful**: Rich data flows through the entire process
