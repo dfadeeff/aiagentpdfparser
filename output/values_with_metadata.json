@@ -6,6 +6,7 @@
       "value": "23,00",
       "row_headers": [
         "M1",
+        "Merged1",
         "Row.Invisible.Grid1",
         "AA"
       ],
@@ -24,8 +25,8 @@
       "value": "25,40",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid1",
-        "AA"
+        "Merged1",
+        "Row.Invisible.Grid1"
       ],
       "column_headers": [
         "Col2",
@@ -44,8 +45,8 @@
       "value": "115,50",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid1",
-        "AA"
+        "Merged1",
+        "Row.Invisible.Grid1"
       ],
       "column_headers": [
         "Col2",
@@ -64,6 +65,7 @@
       "value": "24,00",
       "row_headers": [
         "M1",
+        "Merged1",
         "Row.Invisible.Grid2",
         "BB"
       ],
@@ -82,8 +84,8 @@
       "value": "25,10",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid2",
-        "BB"
+        "Merged1",
+        "Row.Invisible.Grid2"
       ],
       "column_headers": [
         "Col2",
@@ -102,8 +104,8 @@
       "value": "125,50",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid2",
-        "BB"
+        "Merged1",
+        "Row.Invisible.Grid2"
       ],
       "column_headers": [
         "Col2",
@@ -122,8 +124,8 @@
       "value": "DD",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid2",
-        "BB"
+        "Merged1",
+        "Row.Invisible.Grid2"
       ],
       "column_headers": [
         "Col5"
@@ -140,6 +142,7 @@
       "value": "26,00",
       "row_headers": [
         "M1",
+        "Merged1",
         "Row.Invisible.Grid3",
         "CC"
       ],
@@ -158,8 +161,8 @@
       "value": "25,20",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1",
+        "Row.Invisible.Grid3"
       ],
       "column_headers": [
         "Col2",
@@ -178,8 +181,8 @@
       "value": "105,50",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1",
+        "Row.Invisible.Grid3"
       ],
       "column_headers": [
         "Col2",
@@ -198,8 +201,9 @@
       "value": "50,00",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1",
+        "Row.Invisible.Grid1",
+        "AA"
       ],
       "column_headers": [
         "Col4",
@@ -217,8 +221,9 @@
       "value": "54,00",
       "row_headers": [
         "M1",
-        "Row.Invisible.Grid3",
-        "CC"
+        "Merged1",
+        "Row.Invisible.Grid1",
+        "AA"
       ],
       "column_headers": [
         "Col4",
@@ -235,7 +240,8 @@
     {
       "value": "35,00",
       "row_headers": [
-        "M2"
+        "M1",
+        "Merged1"
       ],
       "column_headers": [
         "Col2",
@@ -253,7 +259,8 @@
     {
       "value": "35,00",
       "row_headers": [
-        "M2"
+        "M1",
+        "Merged1"
       ],
       "column_headers": [
         "Col2",
